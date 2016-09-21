@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/reimi/punchsystem/db'
+let g:netrw_dirhist_2='/home/reimi/aps'
+let g:netrw_dirhist_3='/home/reimi/snb_app'
+let g:netrw_dirhist_4='/home/reimi/punchsystem/lib/common'
+let g:netrw_dirhist_5='/home/reimi'
