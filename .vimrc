@@ -1,5 +1,5 @@
 set nocompatible
-
+syntax on
 " Vundle Settings -------------{{{
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -11,6 +11,7 @@ Plugin 'jalvesaq/R-Vim-runtime'
 Plugin 'vim-scripts/Vim-R-plugin'
 Plugin 'Valloric/YouCompleteMe' 
 Plugin 'rdnetto/YCM-Generator'
+Plugin 'othree/yajs.vim'
 Plugin 'bling/vim-airline'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'Shougo/unite.vim'
@@ -30,6 +31,10 @@ Plugin 'sjl/gundo.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'groenewege/vim-less'
+Plugin 'chemzqm/vim-jsx-improve'
+Plugin 'tpope/vim-surround'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tomtom/tcomment_vim'
 call vundle#end()
 filetype plugin indent on
 "}}}
@@ -41,6 +46,7 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#enabled=0
 let g:AutoPairsShortcutToggle = ''
 
+let g:syntastic_c_compiler_options = '-std=gnu11'
 let g:syntastic_cpp_compiler_options = '-std=c++11'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -73,8 +79,12 @@ imap <c-u> <esc>hevbUea
 nnoremap <leader><cr> i<cr><esc>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
 vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>h 
 vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>h 
+vnoremap <leader>( <esc>`<i(<esc>`>la)<esc>`<i
+vnoremap <leader>[ <esc>`<i[<esc>`>la]<esc>`<i
+
 
 inoremap jk <esc>
 nnoremap <esc>j gj
@@ -89,14 +99,15 @@ onoremap npl :<c-u>normal! $F(vi)<cr>
 
 onoremap in@ :<c-u>execute "normal! /[A-Za-z0-9+-_%.]\\+@[A-Za-z0-9-.]\\+\\.[A-Za-z0-9]\\{2,4\\}/\r:nohlsearch\rgn"<cr>
 
-:nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<CR>``
+nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<CR>``
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-h> <c-w><c-h>
 nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 nnoremap <silent> <Tab> :bnext<cr>
 nnoremap <silent> <S-Tab> :bprevious<cr>
-nnoremap <silent> <leader>c :bdelete<cr>
+nnoremap <silent> <leader>c :bp<bar>sp<bar>bn<bar>bd<cr>
+nnoremap <leader>v :vsp<bar>bn<cr>
 "Shrotcuts for closing split window
 nnoremap <leader>q <c-w>q
 nnoremap <silent> <leader>h :call ToggleHlsearch()<cr>
@@ -163,6 +174,7 @@ call unite#custom#source('file_rec/async,file_rec,file_mru',
       \ '\.ivy2/',
       \ '\.local/activator/',
       \ ], '\|'))
+
 if executable('ag')
     let g:unite_source_grep_command='ag'
     let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
@@ -282,7 +294,8 @@ set showcmd
 "set smartindent   
 set hidden
 set showmatch   
-set number
+"set number
+set relativenumber
 set laststatus=2
 set splitright
 set ttimeoutlen=50
